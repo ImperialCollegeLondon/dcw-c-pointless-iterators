@@ -5,12 +5,12 @@
 
 #include "list.h"
 
-listp list_init(const char *value) {
-
+listp list_init( const char *value )
+{
     listp l = malloc(sizeof(*l));
     assert( l != NULL );
 
-    assert( strlen(value) < LISTNAMELEN );	// DCW: you had no range check
+    assert( strlen(value) < LISTNAMELEN );
     strcpy(l->value, value);
     l->next = NULL;
 
@@ -18,9 +18,10 @@ listp list_init(const char *value) {
 }
 
 
-listp list_push(listp l, const char *value) {
-
-    if (l == NULL) {
+listp list_push( listp l, const char *value )
+{ 
+    if( l == NULL )
+    {
         l = list_init(value);
         return l;
     }
@@ -42,27 +43,30 @@ listp list_push(listp l, const char *value) {
     return l;
 }
 
-char *list_head(listp l) {
+char *list_head( listp l )
+{
     return l->value;
 }
 
-listp list_tail(listp l) {
+listp list_tail( listp l )
+{
     return l->next;
 }
 
-listp list_search(listp l, const char *value) {
-
-    if (l == NULL) {
+listp list_search( listp l, const char *value )
+{
+    if( l == NULL )
+    {
         printf( "WARN: Can't find any value on an empty listp.\n");
         return NULL;
     }
 
-    while (l != NULL) {
-        if (strcmp(l->value, value) == 0) {
+    for( ; l != NULL; l = l->next )
+    {
+        if( strcmp(l->value, value) == 0 )
+	{
             return l;
         }
-
-        l = l->next;
     }
 
     return NULL;
@@ -79,9 +83,10 @@ void list_foreach( listp l, listcallback cb, void *v )
 }
 
 
-void list_free(listp l) {
-
-    while(l != NULL) {
+void list_free( listp  l)
+{
+    while( l != NULL )
+    {
         listp p = l;
         l = l->next;
         free(p);

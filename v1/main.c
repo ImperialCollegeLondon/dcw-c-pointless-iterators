@@ -19,11 +19,9 @@ static char *words[] =
 static void checkwords( listp mylist )
 {
     size_t i = 0;
-
-    for( listp p = mylist; p != NULL; p = list_tail(p) ) {
-
+    for( listp p = mylist; p != NULL; p = list_tail(p) )
+    {
         char *word = list_head(p);
-
         if(strcmp(words[i], word) == 0)
 	{
 		printf("OK %s\n", word);
@@ -42,8 +40,9 @@ static void checkword_cb( const char *value, void *v )
 {
 	int *wdno = v;
 	char *expected = words[*wdno];
+	assert( expected != NULL );
 	(*wdno)++;
-        if(strcmp(expected, value) == 0)
+        if( strcmp(expected, value) == 0 )
 	{
 		printf("OK %s\n", value);
 	} else
@@ -60,8 +59,8 @@ static void checkwords_via_foreach( listp mylist )
 }
 
 
-int main(int argc, char **argv) {
-
+int main( int argc, char **argv )
+{
 	listp mylist = NULL;
 	for( int i=0; words[i] != NULL; i++ )
 	{
@@ -69,7 +68,6 @@ int main(int argc, char **argv) {
 	}
 
 	checkwords( mylist );
-
 	checkwords_via_foreach( mylist );
 
 	list_free( mylist );
