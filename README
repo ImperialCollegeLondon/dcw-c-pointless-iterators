@@ -20,6 +20,9 @@ eg. the list_free() function did this, and thus leaked memory.  Let's fix it,
 and see whether the separate iterator interface and module added any value.
 [Hint: the answer is no, it didn't!]
 
+
+==== v1 ====
+
 In v1 are list.[ch] and main.c, my tidied up and stripped down version of Rafael's
 code.  No iterator module, it's all folded back into the list module, all we
 needed to add was list_tail() in order to give a non-dangerous and iterator-like
@@ -35,6 +38,8 @@ traversal.
 However, list_push() still has to find the last node by iteration.  That's
 really inefficient, and will be particularly bad as lists grow longer.
 
+
+==== v2 ====
 
 In v2 you'll find a reimplementation that fixes that, but we now need to separate
 the concept of a list (with first and last pointers) from that of a node on the
