@@ -19,11 +19,10 @@ static char *words[] =
 static void checkwords( listp mylist )
 {
     size_t i = 0;
-    nodep p = list_first(mylist);
 
-    while (p != NULL ) {
+    for( nodep p = list_first(mylist); p != NULL; p = list_tail(p) ) {
+
         char *word = list_head(p);
-	p = list_tail(p);
 
         if(strcmp(words[i], word) == 0)
 	{
