@@ -15,14 +15,13 @@ static char *words[] =
     NULL
 };
 
-
 static void checkwords( listp mylist )
 {
     size_t i = 0;
     for( listp p = mylist; p != NULL; p = list_tail(p) )
     {
         char *word = list_head(p);
-        if(strcmp(words[i], word) == 0)
+        if( strcmp(words[i], word) == 0 )
 	{
 		printf("OK %s\n", word);
 	} else
@@ -32,7 +31,6 @@ static void checkwords( listp mylist )
 	i++;
     }
 }
-
 
 // checkword callback: v is a disguised int *, call it wdno, words[*wdno] is
 // the current expected word this time, increment (*wdno) each time.
@@ -51,13 +49,11 @@ static void checkword_cb( const char *value, void *v )
 	}
 }
 
-
 static void checkwords_via_foreach( listp mylist )
 {
 	int i = 0;
 	list_foreach( mylist, checkword_cb, (void *)&i );
 }
-
 
 int main( int argc, char **argv )
 {
