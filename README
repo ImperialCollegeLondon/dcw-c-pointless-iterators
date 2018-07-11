@@ -1,0 +1,54 @@
+In July 2018, Rafael Campos Nunes, a relatively new C programmer, started a
+new discussion in LinkedIn's Plain Old C forum about implementing iterators in C.
+Specifically, he'd written some code, shoved it in a github repo, and written a
+blog post about it.
+
+Seems completely pointless to me, and his code was badly designed and containing
+several bugs, for instance not checking for string overflow in the 64-character
+name field, not checking the return values of malloc() consistently, and having
+(ironically) broken iteration over his lists by several instances of code reading:
+
+while( l->next != NULL )
+
+rather than
+
+while( l != NULL )
+
+(so skipping the first element!)
+
+eg. the list_free() function did this, and thus leaked memory.  Let's fix it,
+and see whether the separate iterator interface and module added any value.
+[Hint: the answer is no, it didn't!]
+
+In v1 are list.[ch] and main.c, my tidied up and stripped down version of Rafael's
+code.  No iterator module, it's all folded back into the list module, all we
+needed to add was list_tail() in order to give a non-dangerous and iterator-like
+idiom for list traversal.  I've also pruned out the CMakefile in favour of a
+Makefile, lost all the license fluff (seriously, do programmers these days believe
+that adding a license is more important than writing code that WORKS?), and
+ruthlessly flattened the directories down.
+
+I then added list_foreach() as I suggested in the Linkedin discussion, which
+is IMO a much better (functional-inspired, not OOP-inspired) idiom for list
+traversal.
+
+However, list_push() still has to find the last node by iteration.  That's
+really inefficient, and will be particularly bad as lists grow longer.
+
+
+In v2 you'll find a reimplementation that fixes that, but we now need to separate
+the concept of a list (with first and last pointers) from that of a node on the
+list, changing some function signatures, and adding list_first() that delivers the
+pointer to the first node in the list.
+
+Not sure that I like the separation of "list pointers" and "node pointers", but
+it's similar to how other languages used to do it (I remember a "link" class in
+Simula-67 that was directly equivalent to a node).
+
+Pleasingly, list_foreach() hides all the unpleasant list/nodep distinctions behind
+an unaltered interface, so the main program needs no modification to use that.
+
+
+Both versions (when checked with valgrind) now leak no memory.
+
+		Duncan White, 11th July 2018
