@@ -18,10 +18,11 @@ struct list_s {
 // A listcallback is used for list_foreach..
 typedef void (*listcallback)( const char *value, void * );
 
-// Creates a new list and returns a pointer to it.
+
+// Creates a new 1-element list and returns a pointer to it.
 extern listp list_init(const char *);
 
-// Pushes a node to the end of the list returning the altered list.
+// Pushes a node to the end of the list, returning the altered list.
 extern listp list_push(listp, const char *);
 
 // Finds a specific word in a node on the list and returns a node pointer to it.
@@ -41,7 +42,7 @@ extern nodep list_tail(nodep);
 // that can store any value in it (or none).
 extern void list_foreach( listp l, listcallback cb, void *v );
 
-// Frees a list of values.
+// Frees a whole list.
 extern void list_free(listp);
 
 #endif // LIST_H

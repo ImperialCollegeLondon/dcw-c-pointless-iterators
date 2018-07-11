@@ -22,10 +22,10 @@ extern listp list_push(listp, const char *);
 // Finds a specific word in the list and returns a pointer to it.
 extern listp list_search(listp, const char *);
 
-// Returns the head value of the list passed as parameter.
+// Returns the head value of the given list.
 extern char *list_head(listp);
 
-// Returns the tail of the list passed as parameter.
+// Returns the tail of the given list.
 extern listp list_tail(listp);
 
 // Iterate over a list <l>, calling the callback <cb> function for each
@@ -33,7 +33,7 @@ extern listp list_tail(listp);
 // that can store any value in it (or none).
 extern void list_foreach( listp l, listcallback cb, void *v );
 
-// Frees a list of values.
+// Frees a whole list.
 extern void list_free(listp);
 
 #endif // LIST_H
